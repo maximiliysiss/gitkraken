@@ -36,7 +36,7 @@ namespace InternShip1
         /// <returns>Position Information</returns>
         protected String PositionInformation()
         {
-            return $"position({x},{y},{z}) quanterion = {Rotate.ToString()}";
+            return $"Position({x},{y},{z}) Quanterion = {Rotate.ToString()}";
         }
 
 
