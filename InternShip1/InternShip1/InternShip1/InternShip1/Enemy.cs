@@ -46,7 +46,7 @@ namespace InternShip1
         /// <returns>All information about object</returns>
         public override string GetInformation()
         {
-            return $"This is enemy - {GetInformationAboutEnemy()} - {PositionInformation()} level of agressive is {levelAgressive}";
+            return $"This is enemy - {GetInformationAboutEnemy()} - {PositionInformation()}; Level of agressive is {levelAgressive}";
         }
     }
 }
