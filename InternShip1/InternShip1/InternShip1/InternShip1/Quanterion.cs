@@ -40,6 +40,17 @@ namespace InternShip1
         }
 
         /// <summary>
+        /// Конструктор с параметрами
+        /// </summary>
+        /// <param name="scalyar">Скаляр</param>
+        /// <param name="Vector">Вектор</param>
+        public Quanterion(int scalyar, Tuple<int, int> Vector)
+        {
+            this.scalyar = scalyar;
+            this.Vector = Vector;
+        }
+
+        /// <summary>
         /// Перегрузка метода ToString()
         /// </summary>
         /// <returns>About Quanterion</returns>

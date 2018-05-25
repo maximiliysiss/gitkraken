@@ -24,15 +24,35 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="levelAgressive">Level of agressive</param>
-        public Enemy(int x, int y, int z, Quanterion Rotate, short levelAgressive) : base(x, y, z, Rotate)
+        public Enemy(int x, int y, int z, Quanterion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
         {
             this.levelAgressive = levelAgressive;
         }
 
         /// <summary>
+        /// Сериализация
+        /// </summary>
+        /// <param name="db">База данных</param>
+        /// <param name="index">Индекс строки в базе данных</param>
+        public override void Serialize(Reader db, int index)
+        {
+            if (!db.GetAllRecords()[index].levelAgressive.HasValue)
+                throw new ArgumentNullException($"levelAgressive is null (Enemy.Serialize|Index = {index})");
+            this.levelAgressive = db.GetAllRecords()[index].levelAgressive.Value;
+            try
+            {
+                base.Serialize(db, index);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException($"{ex.Message}(Enemy.Serialize|Index = {index})");
+            }
+        }
+
+        /// <summary>
         /// Уровень агрессии
         /// </summary>
-        protected short levelAgressive;
+        protected int levelAgressive;
 
         /// <summary>
         /// Получить дополнительную информацию о враге
