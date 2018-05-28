@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,36 +29,54 @@ namespace InternShip1
 
         static void Main(string[] args)
         {
-            Reader reader = new Reader();
-            List<Actor> actors = new List<Actor>();
-            for (int i = 0; i < reader.GetAllRecords().Count; i++)
+            List<Actor> list = new List<Actor>();
+            using (SqlConnection cn = new SqlConnection())
             {
+                cn.ConnectionString = "data source=(LocalDB)\\MSSQLLocalDB;attachdbfilename=|DataDirectory|\\Database.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
                 try
                 {
-                    Actor actor = null;
-                    switch ((TypeEntity)reader.GetAllRecords()[i].TypeEntity)
+                    cn.Open();
+                    SqlCommand sqlCommand = new SqlCommand("select * from AllInformation", cn);
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
                     {
-                        case TypeEntity.Helicopter:
-                            actor = new Helicopter();
-                            break;
-                        case TypeEntity.Player:
-                            actor = new Player();
-                            break;
-                        case TypeEntity.Soldier:
-                            actor = new Soldier();
-                            break;
-                        default:
-                            throw new ArgumentException($"Exception - Unknown TypeEntity (Program|Index = {i})");
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                Actor actor = null;
+                                switch ((TypeEntity)reader["TypeEntity"])
+                                {
+                                    case TypeEntity.Helicopter:
+                                        actor = new Helicopter();
+                                        actor.Serialize(reader);
+                                        break;
+                                    case TypeEntity.Player:
+                                        actor = new Player();
+                                        actor.Serialize(reader);
+                                        break;
+                                    case TypeEntity.Soldier:
+                                        actor = new Soldier();
+                                        actor.Serialize(reader);
+                                        break;
+                                    default:
+                                        throw new ArgumentException("Unknown Type of Entity (Program)");
+                                }
+                                Console.WriteLine(actor.GetInformation());
+                                list.Add(actor);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
                     }
-                    actor.Serialize(reader, i);
-                    actors.Add(actor);
-                    Console.WriteLine(actor.GetInformation());
                 }
-                catch (ArgumentException ex)
+                catch (Exception ex)
                 {
-                    System.Console.WriteLine($"Exception is ({ex.Message})");
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
     }
+
 }

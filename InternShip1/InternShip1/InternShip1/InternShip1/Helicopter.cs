@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,20 +51,19 @@ namespace InternShip1
         /// <summary>
         /// Сериализация
         /// </summary>
-        /// <param name="db">База данных</param>
-        /// <param name="index">Индекс строки в базе данных</param>
-        public override void Serialize(Reader db, int index)
+        /// <param name="db">Reader</param>
+        public override void Serialize(SqlDataReader db)
         {
-            if (!db.GetAllRecords()[index].weight.HasValue)
-                throw new ArgumentNullException($"Weight (Helicopter.Serialize|Index = {index})");
-            this.weight = db.GetAllRecords()[index].weight.Value;
+            if (db.IsDBNull(9))
+                throw new ArgumentNullException($"Weight (Helicopter.Serialize)");
+            this.weight = Convert.ToInt32(db["weight"]);
             try
             {
-                base.Serialize(db, index);
+                base.Serialize(db);
             }
             catch (ArgumentException ex)
             {
-                throw new ArgumentException($"{ex.Message}(Helicopter.Serialize|Index = {index})");
+                throw new ArgumentException($"{ex.Message}(Helicopter.Serialize)");
             }
         }
 

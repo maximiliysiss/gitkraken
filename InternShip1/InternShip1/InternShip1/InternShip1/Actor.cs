@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,22 +72,20 @@ namespace InternShip1
         }
 
         /// <summary>
-        /// Сериализация объекта на уровне Actor
+        /// Serialize
         /// </summary>
-        /// <param name="db">База данных</param>
-        /// <param name="index">Индекс строки в глобальной базе данных</param>
-        public virtual void Serialize(Reader db, int index)
+        /// <param name="reader">Reader</param>
+        public virtual void Serialize(SqlDataReader reader)
         {
-            AllInformation part = db.GetAllRecords()[index];
-            if (part.X < 0 || part.Y < 0 || part.Z < 0)
-                throw new ArgumentException($"Incorrect position for this universe (only > 0) (Actor.Serialize|Index = {index})");
-            if (part.scalyar < 0)
-                throw new ArgumentException($"Incorrect scalyar for this universe (only > 0) (Actor.Serialize|Index = {index})");
-            this.x = part.X;
-            this.y = part.Y;
-            this.z = part.Z;
-            this.Rotate.Scalyar = part.scalyar;
-            this.Rotate.Vector = new Tuple<int, int>(part.vector_item1, part.vector_item2);
+            if (Convert.ToInt32(reader["X"]) < 0 || Convert.ToInt32(reader["Y"]) < 0 || Convert.ToInt32(reader["Z"]) < 0)
+                throw new ArgumentException("Incorrect position for this universe (only > 0) (Actor.Serialize)");
+            if (Convert.ToInt32(reader["scalyar"]) < 0)
+                throw new ArgumentException("Incorrect scalyar for this universe (only > 0) (Actor.Serialize)");
+            this.x = Convert.ToInt32(reader["X"]);
+            this.y = Convert.ToInt32(reader["Y"]);
+            this.z = Convert.ToInt32(reader["Z"]);
+            this.Rotate.Scalyar = Convert.ToInt32(reader["scalyar"]);
+            this.Rotate.Vector = new Tuple<int, int>(Convert.ToInt32(reader["vector.item1"]), Convert.ToInt32(reader["vector.item2"]));
         }
 
         /// <summary>
