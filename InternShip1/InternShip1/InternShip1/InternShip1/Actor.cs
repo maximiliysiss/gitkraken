@@ -12,7 +12,7 @@ namespace InternShip1
     /// </summary>
     enum TypeEntity
     {
-        Player, Helicopter, Soldier, Unknown
+        Player = 1, Helicopter, Soldier, Unknown
     }
 
     /// <summary>
@@ -69,23 +69,6 @@ namespace InternShip1
             this.z = z;
             this.Rotate = Rotate;
             this.TypeOfEntity = TypeEntity;
-        }
-
-        /// <summary>
-        /// Serialize
-        /// </summary>
-        /// <param name="reader">Reader</param>
-        public virtual void Serialize(SqlDataReader reader)
-        {
-            if (Convert.ToInt32(reader["X"]) < 0 || Convert.ToInt32(reader["Y"]) < 0 || Convert.ToInt32(reader["Z"]) < 0)
-                throw new ArgumentException("Incorrect position for this universe (only > 0) (Actor.Serialize)");
-            if (Convert.ToInt32(reader["scalyar"]) < 0)
-                throw new ArgumentException("Incorrect scalyar for this universe (only > 0) (Actor.Serialize)");
-            this.x = Convert.ToInt32(reader["X"]);
-            this.y = Convert.ToInt32(reader["Y"]);
-            this.z = Convert.ToInt32(reader["Z"]);
-            this.Rotate.Scalyar = Convert.ToInt32(reader["scalyar"]);
-            this.Rotate.Vector = new Tuple<int, int>(Convert.ToInt32(reader["vector.item1"]), Convert.ToInt32(reader["vector.item2"]));
         }
 
         /// <summary>

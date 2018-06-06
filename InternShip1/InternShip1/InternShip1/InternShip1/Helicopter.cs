@@ -49,25 +49,6 @@ namespace InternShip1
         }
 
         /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if (db.IsDBNull(9))
-                throw new ArgumentNullException($"Weight (Helicopter.Serialize)");
-            this.weight = Convert.ToInt32(db["weight"]);
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Helicopter.Serialize)");
-            }
-        }
-
-        /// <summary>
         /// Перегрузка метода дополнительной информации о враге
         /// </summary>
         /// <returns>It's helicopter</returns>

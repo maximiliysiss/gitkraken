@@ -31,25 +31,6 @@ namespace InternShip1
         }
 
         /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if (db.IsDBNull(8))
-                throw new ArgumentNullException($"levelAgressive is null (Enemy.Serialize)");
-            this.levelAgressive = ((int?)db["levelAgressive"]).Value;
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Enemy.Serialize)");
-            }
-        }
-
-        /// <summary>
         /// Уровень агрессии
         /// </summary>
         protected int levelAgressive;
