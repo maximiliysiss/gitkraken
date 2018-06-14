@@ -12,32 +12,44 @@ namespace InternShip1
     /// </summary>
     class PlayerDAO : DatabaseInteract<Player>
     {
-        /// <summary>
-        /// Конструктор от строки подулючения
-        /// </summary>
-        /// <param name="connection">Строка подключения</param>
-        public PlayerDAO(string connection) : base(connection) { }
 
         /// <summary>
         /// Сериализация объекта Player
         /// </summary>
-        /// <param name="reader">Ридер</param>
-        /// <returns>Player</returns>
-        public override Player Serialize(SqlDataReader reader)
+        /// <param name="reader">Reader</param>
+        /// <returns>List</returns>
+        public override List<Player> Serialize(SqlDataReader reader)
         {
-            if (types.Where(x => x.Id == Convert.ToInt32(reader["TypeEntity ID"])).First().Name != "Player")
-                return null;
-            if (Convert.ToInt32(reader["X"]) < 0 || Convert.ToInt32(reader["Y"]) < 0 || Convert.ToInt32(reader["Z"]) < 0)
-                throw new ArgumentException("Incorrect position for this universe (only > 0) (PlayerDAO.Serialize)");
-            if (Convert.ToInt32(reader["scalyar"]) < 0)
-                throw new ArgumentException("Incorrect scalyar for this universe (only > 0) (PlayerDAO.Serialize)");
-            if ((int)reader["TypeEntity ID"] != (int)TypeEntity.Player)
-                throw new ArgumentException($"Incorrect Type Of Entity (PlayerDAO.Serialize)");
-            Player player = new Player(Convert.ToInt32(reader["X"]), Convert.ToInt32(reader["Y"]),
-                Convert.ToInt32(reader["Z"]), new Quanterion(Convert.ToInt32(reader["scalyar"]),
-                new Tuple<int, int>(Convert.ToInt32(reader["vector.item1"]), Convert.ToInt32(reader["vector.item2"]))),
-                (Convert.ToBoolean(reader["IsDeath"])) ? true : false);
-            return player;
+            List<Player> players = new List<Player>();
+            while (reader.Read())
+            {
+                try
+                {
+                    if ((TypeEntity)reader["TypeEntity ID"] == TypeEntity.Player)
+                    {
+                        if (Convert.ToInt32(reader["X"]) < 0 || Convert.ToInt32(reader["Y"]) < 0 || Convert.ToInt32(reader["Z"]) < 0)
+                            throw new ArgumentException("Incorrect position for this universe (only > 0) (PlayerDAO.Serialize)");
+                        if (Convert.ToInt32(reader["scalyar"]) < 0)
+                            throw new ArgumentException("Incorrect scalyar for this universe (only > 0) (PlayerDAO.Serialize)");
+                        int x = Convert.ToInt32(reader["X"]);
+                        int y = Convert.ToInt32(reader["Y"]);
+                        int z = Convert.ToInt32(reader["Z"]);
+                        Tuple<int, int> vector = new Tuple<int, int>(Convert.ToInt32(reader["vector.item1"]), Convert.ToInt32(reader["vector.item2"]));
+                        Quanternion quanterion = new Quanternion(Convert.ToInt32(reader["scalyar"]), vector);
+                        bool isDeath = Convert.ToBoolean(reader["IsDeath"]);
+                        players.Add(new Player(x, y, z, quanterion, isDeath));
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (NotSpecifiedException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return players;
         }
     }
 }

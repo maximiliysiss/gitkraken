@@ -14,73 +14,28 @@ namespace InternShip1
     /// <typeparam name="T">Тип параметра</typeparam>
     abstract class DatabaseInteract<T>
     {
-        /// <summary>
-        /// Строка подключения
-        /// </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary>
-        /// Лист типов
-        /// </summary>
-        public List<Type> types;
-
-        /// <summary>
-        /// Подключение
-        /// </summary>
-        private SqlConnection connection;
-        /// <summary>
-        /// Команда
-        /// </summary>
-        private SqlCommand command;
-        /// <summary>
-        /// Ридер
-        /// </summary>
-        private SqlDataReader reader;
-
-
-
-        /// <summary>
-        /// Дефолтный конструктор
-        /// </summary>
-        public DatabaseInteract() { }
-
-        /// <summary>
-        /// Конструктор с заданием строки подключения
-        /// </summary>
-        /// <param name="ConnectionString">Строка подключения</param>
-        public DatabaseInteract(string ConnectionString)
-        {
-            this.ConnectionString = ConnectionString;
-            types = new TypeDAO(ConnectionString).Load("select * from Type");
-        }
 
         /// <summary>
         /// Выгрузка списка данных
         /// </summary>
-        /// <param name="sql">Команда</param>
+        /// <param name="sql">Connection String</param>
         /// <returns>Лист данных</returns>
         public List<T> Load(string sql)
         {
             try
             {
-                Open();
-                List<T> list = new List<T>();
-                SetCommand(sql);
-                var reader = GetReader();
-                while (reader.Read())
+                List<T> list = null;
+                using (var conn = new SqlConnection(sql))
                 {
-                    try
+                    conn.Open();
+                    using (var command = new SqlCommand("select * from AllInformation", conn))
                     {
-                        T newElement = Serialize(reader);
-                        if (newElement != null)
-                            list.Add(newElement);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine(ex.Message);
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            list = Serialize(reader);
+                        }
                     }
                 }
-                Close();
                 return list;
             }
             catch (NotSpecifiedException ex)
@@ -92,54 +47,9 @@ namespace InternShip1
         /// <summary>
         /// Сериализатор данных
         /// </summary>
-        /// <param name="reader">Ридер</param>
-        /// <returns>Сформированный объект</returns>
-        public abstract T Serialize(SqlDataReader reader);
+        /// <param name="reader">Reader</param>
+        /// <returns>List</returns>
+        public abstract List<T> Serialize(SqlDataReader reader);
 
-        /// <summary>
-        /// Открыть подключение
-        /// </summary>
-        public void Open()
-        {
-            if (ConnectionString == null)
-                throw new NotSpecifiedException("Connection String not specified");
-            connection = new SqlConnection(ConnectionString);
-            connection.Open();
-        }
-
-        /// <summary>
-        /// Получить сформированную команду
-        /// </summary>
-        /// <param name="cmd">Команда</param>
-        /// <returns>Команда</returns>
-        public SqlCommand SetCommand(string cmd)
-        {
-            if (connection == null)
-                throw new NotSpecifiedException("Connection not specified");
-            command = new SqlCommand(cmd, connection);
-            return command;
-        }
-
-        /// <summary>
-        /// Получить ридер
-        /// </summary>
-        /// <returns>Ридер</returns>
-        public SqlDataReader GetReader()
-        {
-            if (command == null)
-                throw new NotSpecifiedException("Command not specified");
-            reader = command.ExecuteReader();
-            return reader;
-        }
-
-        /// <summary>
-        /// Закрыть соединение
-        /// </summary>
-        public void Close()
-        {
-            if (!reader.IsClosed)
-                reader.Close();
-            connection.Close();
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="levelAgressive">Level of agressive</param>
-        public Enemy(int x, int y, int z, Quanterion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
+        public Enemy(int x, int y, int z, Quanternion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
         {
             this.levelAgressive = levelAgressive;
         }

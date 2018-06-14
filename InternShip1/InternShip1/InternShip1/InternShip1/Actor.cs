@@ -23,7 +23,7 @@ namespace InternShip1
         /// <summary>
         /// Поворот
         /// </summary>
-        public Quanterion Rotate { get; set; }
+        public Quanternion Rotate { get; set; }
 
         /// <summary>
         /// Позиции
@@ -36,7 +36,7 @@ namespace InternShip1
         public Actor()
         {
             this.x = this.y = this.z = 0;
-            this.Rotate = new Quanterion();
+            this.Rotate = new Quanternion();
             TypeOfEntity = TypeEntity.Unknown;
         }
 
@@ -62,7 +62,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate"></param>
-        public Actor(int x, int y, int z, Quanterion Rotate, TypeEntity TypeEntity)
+        public Actor(int x, int y, int z, Quanternion Rotate, TypeEntity TypeEntity)
         {
             this.x = x;
             this.y = y;

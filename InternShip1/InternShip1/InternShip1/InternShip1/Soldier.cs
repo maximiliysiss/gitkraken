@@ -29,7 +29,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Soldier(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        public Soldier(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
         {
         }
 
@@ -41,7 +41,7 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="health">Health</param>
-        public Soldier(int x, int y, int z, Quanterion Rotate, int health) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        public Soldier(int x, int y, int z, Quanternion Rotate, int health) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
         {
             this.health = health;
         }

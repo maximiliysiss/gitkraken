@@ -29,7 +29,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Player(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, TypeEntity.Player)
+        public Player(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, TypeEntity.Player)
         {
             IsDeath = false;
         }
@@ -42,7 +42,7 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="IsDeath">IsDeath</param>
-        public Player(int x, int y, int z, Quanterion Rotate, bool IsDeath) : base(x, y, z, Rotate, TypeEntity.Player)
+        public Player(int x, int y, int z, Quanternion Rotate, bool IsDeath) : base(x, y, z, Rotate, TypeEntity.Player)
         {
             this.IsDeath = IsDeath;
         }

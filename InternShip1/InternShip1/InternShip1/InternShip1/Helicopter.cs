@@ -30,7 +30,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Helicopter(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
         {
             weight = 30;
         }
@@ -43,7 +43,7 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="weight">Weight</param>
-        public Helicopter(int x, int y, int z, Quanterion Rotate, int weight) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, Quanternion Rotate, int weight) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
         {
             this.weight = weight;
         }
