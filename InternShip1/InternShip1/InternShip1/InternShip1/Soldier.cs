@@ -29,8 +29,21 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Soldier(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        public Soldier(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
         {
+        }
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="x">Ox</param>
+        /// <param name="y">Oy</param>
+        /// <param name="z">Oz</param>
+        /// <param name="Rotate">Rotate</param>
+        /// <param name="health">Health</param>
+        public Soldier(int x, int y, int z, Quanternion Rotate, int health) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        {
+            this.health = health;
         }
 
         /// <summary>
@@ -40,25 +53,6 @@ namespace InternShip1
         public override string GetInformationAboutEnemy()
         {
             return $"I'm soldier and hp = {this.health}";
-        }
-
-        /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if (db.IsDBNull(11))
-                throw new ArgumentNullException($"Health is null (Soldier.Serialize)");
-            this.health = Convert.ToInt32(db["health"]);
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Soldier.Serialize)");
-            }
         }
     }
 }

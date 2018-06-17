@@ -25,28 +25,9 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="levelAgressive">Level of agressive</param>
-        public Enemy(int x, int y, int z, Quanterion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
+        public Enemy(int x, int y, int z, Quanternion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
         {
             this.levelAgressive = levelAgressive;
-        }
-
-        /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if (db.IsDBNull(8))
-                throw new ArgumentNullException($"levelAgressive is null (Enemy.Serialize)");
-            this.levelAgressive = ((int?)db["levelAgressive"]).Value;
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Enemy.Serialize)");
-            }
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace InternShip1
     /// <summary>
     /// Класс Quanterion
     /// </summary>
-    class Quanterion
+    class Quanternion
     {
         /// <summary>
         /// Скаляр
@@ -33,7 +33,7 @@ namespace InternShip1
         /// <summary>
         /// Default Constractor
         /// </summary>
-        public Quanterion()
+        public Quanternion()
         {
             scalyar = 1;
             Vector = new Tuple<int, int>(0, 0);
@@ -44,7 +44,7 @@ namespace InternShip1
         /// </summary>
         /// <param name="scalyar">Скаляр</param>
         /// <param name="Vector">Вектор</param>
-        public Quanterion(int scalyar, Tuple<int, int> Vector)
+        public Quanternion(int scalyar, Tuple<int, int> Vector)
         {
             this.scalyar = scalyar;
             this.Vector = Vector;

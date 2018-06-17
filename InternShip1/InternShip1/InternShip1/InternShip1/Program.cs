@@ -30,52 +30,12 @@ namespace InternShip1
         static void Main(string[] args)
         {
             List<Actor> list = new List<Actor>();
-            using (SqlConnection cn = new SqlConnection())
-            {
-                cn.ConnectionString = "data source=(LocalDB)\\MSSQLLocalDB;attachdbfilename=|DataDirectory|\\Database.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
-                try
-                {
-                    cn.Open();
-                    SqlCommand sqlCommand = new SqlCommand("select * from AllInformation", cn);
-                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            try
-                            {
-                                Actor actor = null;
-                                switch ((TypeEntity)reader["TypeEntity"])
-                                {
-                                    case TypeEntity.Helicopter:
-                                        actor = new Helicopter();
-                                        actor.Serialize(reader);
-                                        break;
-                                    case TypeEntity.Player:
-                                        actor = new Player();
-                                        actor.Serialize(reader);
-                                        break;
-                                    case TypeEntity.Soldier:
-                                        actor = new Soldier();
-                                        actor.Serialize(reader);
-                                        break;
-                                    default:
-                                        throw new ArgumentException("Unknown Type of Entity (Program)");
-                                }
-                                Console.WriteLine(actor.GetInformation());
-                                list.Add(actor);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex.Message);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
+            string connectionString = "data source=(LocalDB)\\MSSQLLocalDB;attachdbfilename=|DataDirectory|\\Database.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
+            list.AddRange(new SoldierDAO().Load(connectionString));
+            list.AddRange(new PlayerDAO().Load(connectionString));
+            list.AddRange(new HelicopterDAO().Load(connectionString));
+            foreach (Actor obj in list)
+                Console.WriteLine(obj.GetInformation());
         }
     }
 

@@ -29,9 +29,22 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Player(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, TypeEntity.Player)
+        public Player(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, TypeEntity.Player)
         {
             IsDeath = false;
+        }
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="x">Ox</param>
+        /// <param name="y">Oy</param>
+        /// <param name="z">Oz</param>
+        /// <param name="Rotate">Rotate</param>
+        /// <param name="IsDeath">IsDeath</param>
+        public Player(int x, int y, int z, Quanternion Rotate, bool IsDeath) : base(x, y, z, Rotate, TypeEntity.Player)
+        {
+            this.IsDeath = IsDeath;
         }
 
         /// <summary>
@@ -67,24 +80,5 @@ namespace InternShip1
         /// Метод движения
         /// </summary>
         public void Move() { }
-
-        /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if ((int)db["TypeEntity"] != (int)TypeEntity.Player)
-                throw new ArgumentException($"Incorrect Type Of Entity (Player.Serialize)");
-            IsDeath = (Convert.ToBoolean(db["IsDeath"])) ? true : false;
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Player.Serialize)");
-            }
-        }
     }
 }

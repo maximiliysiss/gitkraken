@@ -30,7 +30,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Helicopter(int x, int y, int z, Quanterion Rotate) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
         {
             weight = 30;
         }
@@ -43,28 +43,9 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="weight">Weight</param>
-        public Helicopter(int x, int y, int z, Quanterion Rotate, int weight) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, Quanternion Rotate, int weight) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
         {
             this.weight = weight;
-        }
-
-        /// <summary>
-        /// Сериализация
-        /// </summary>
-        /// <param name="db">Reader</param>
-        public override void Serialize(SqlDataReader db)
-        {
-            if (db.IsDBNull(9))
-                throw new ArgumentNullException($"Weight (Helicopter.Serialize)");
-            this.weight = Convert.ToInt32(db["weight"]);
-            try
-            {
-                base.Serialize(db);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException($"{ex.Message}(Helicopter.Serialize)");
-            }
         }
 
         /// <summary>

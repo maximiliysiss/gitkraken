@@ -1,0 +1,55 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InternShip1
+{
+    /// <summary>
+    /// Шаблонный абстрактный класс подключения к базе данных
+    /// </summary>
+    /// <typeparam name="T">Тип параметра</typeparam>
+    abstract class DatabaseInteract<T>
+    {
+
+        /// <summary>
+        /// Выгрузка списка данных
+        /// </summary>
+        /// <param name="sql">Connection String</param>
+        /// <returns>Лист данных</returns>
+        public List<T> Load(string sql)
+        {
+            try
+            {
+                List<T> list = null;
+                using (var conn = new SqlConnection(sql))
+                {
+                    conn.Open();
+                    using (var command = new SqlCommand("select * from AllInformation", conn))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            list = Serialize(reader);
+                        }
+                    }
+                }
+                return list;
+            }
+            catch (NotSpecifiedException ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Сериализатор данных
+        /// </summary>
+        /// <param name="reader">Reader</param>
+        /// <returns>List</returns>
+        public abstract List<T> Serialize(SqlDataReader reader);
+
+    }
+}
