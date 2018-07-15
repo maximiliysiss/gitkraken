@@ -37,13 +37,12 @@ select Manager.Name from
 	inner join Manager on Manager.Id = t1.Id;
 
 /*Вывести топ 3 менеджеров на чьих складах большее количество товаров*/
-select top(3) Manager.Name from 
-	(select sum(GoodsInStock.Count) as CountGoods, Manager.Id from Stock 
+select Manager.Name from 
+	(select top(3) Manager.Id from Stock 
 	inner join Manager on Manager.Id = Stock.ManagerID
 	inner join GoodsInStock on GoodsInStock.StockID = Stock.Id 
-		group by Manager.Id) as t1
-	inner join Manager on Manager.Id = t1.Id 
-		order by t1.CountGoods;
+		group by Manager.Id order by sum(GoodsInStock.Count)) as t1
+	inner join Manager on Manager.Id = t1.Id;
 
 /*Увеличить на 1 количество всех товаров на складах с именем товара «Фисташки» и которые обслуживают магазины с именем «Мир пустоты»*/
 update goodsinstock set count=count+1 
