@@ -24,7 +24,7 @@ namespace InternShip1
         {
             try
             {
-                List<T> list = null;
+                List<T> list = new List<T>(); ;
                 using (var conn = new SqlConnection(sql))
                 {
                     conn.Open();
@@ -32,7 +32,12 @@ namespace InternShip1
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            list = Serialize(reader);
+                            while (reader.Read())
+                            {
+                                T elem = Serialize(reader);
+                                if (elem != null)
+                                    list.Add(elem);
+                            }
                         }
                     }
                 }
@@ -49,7 +54,7 @@ namespace InternShip1
         /// </summary>
         /// <param name="reader">Reader</param>
         /// <returns>List</returns>
-        public abstract List<T> Serialize(SqlDataReader reader);
+        public abstract T Serialize(SqlDataReader reader);
 
     }
 }

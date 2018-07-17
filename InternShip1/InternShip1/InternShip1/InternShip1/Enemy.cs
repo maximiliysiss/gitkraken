@@ -36,6 +36,11 @@ namespace InternShip1
         protected int levelAgressive;
 
         /// <summary>
+        /// Свойство для получения уровня агрессии
+        /// </summary>
+        public int LevelAgressive { get { return levelAgressive; } }
+
+        /// <summary>
         /// Получить дополнительную информацию о враге
         /// </summary>
         /// <returns>Information of object</returns>

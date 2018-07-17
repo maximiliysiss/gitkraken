@@ -31,9 +31,10 @@ namespace InternShip1
         {
             List<Actor> list = new List<Actor>();
             string connectionString = "data source=(LocalDB)\\MSSQLLocalDB;attachdbfilename=|DataDirectory|\\Database.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
-            list.AddRange(new SoldierDAO().Load(connectionString));
-            list.AddRange(new PlayerDAO().Load(connectionString));
-            list.AddRange(new HelicopterDAO().Load(connectionString));
+            list.AddRange(new SoldierDAO(connectionString).LoadFromCacheByLinq(x => x.LevelAgressive > 10));
+            list.Add(new PlayerDAO(connectionString).LoadById(1));
+            list.AddRange(new HelicopterDAO(connectionString).Load(connectionString));
+            Console.WriteLine("\nInformation About Objects\n");
             foreach (Actor obj in list)
                 Console.WriteLine(obj.GetInformation());
         }
