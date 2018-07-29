@@ -16,9 +16,17 @@ namespace InternShip1
     }
 
     /// <summary>
+    /// Интерфейс для определения ID для всех объектов
+    /// </summary>
+    interface IIntegerKey
+    {
+        int Id { get; set; }
+    }
+
+    /// <summary>
     /// Класс Actor
     /// </summary>
-    abstract class Actor
+    abstract class Actor : IIntegerKey
     {
         /// <summary>
         /// Поворот
@@ -53,6 +61,11 @@ namespace InternShip1
         /// Тип Сущности
         /// </summary>
         protected TypeEntity TypeOfEntity { get; set; }
+
+        /// <summary>
+        /// Реализация интерфейса
+        /// </summary>
+        public int Id { get; set; }
 
 
         /// <summary>
