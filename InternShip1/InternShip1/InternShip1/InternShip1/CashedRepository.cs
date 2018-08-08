@@ -11,7 +11,7 @@ namespace InternShip1
     /// Загрузка данных с кэшированием
     /// </summary>
     /// <typeparam name="T">Сущность</typeparam>
-    abstract class CashedRepository<T> : DatabaseInteract<T> where T : IIntegerKey
+    abstract class CashedRepository<T> : DatabaseInteract<T> where T : class, IIntegerKey, new()
     {
         /// <summary>
         /// Строка подключения

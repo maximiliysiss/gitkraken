@@ -26,9 +26,15 @@ namespace InternShip1
         }
 
         /// <summary>
-        /// Вектор - автоматическое свойство
+        /// Составляющая вектора1
         /// </summary>
-        public Tuple<int, int> Vector { get; set; }
+        /// 
+        public int vector1 { get; set; }
+
+        /// <summary>
+        /// Составляющая вектора2
+        /// </summary>
+        public int vector2 { get; set; }
 
         /// <summary>
         /// Default Constractor
@@ -36,7 +42,7 @@ namespace InternShip1
         public Quanternion()
         {
             scalyar = 1;
-            Vector = new Tuple<int, int>(0, 0);
+            vector1 = vector2 = 0;
         }
 
         /// <summary>
@@ -47,7 +53,8 @@ namespace InternShip1
         public Quanternion(int scalyar, Tuple<int, int> Vector)
         {
             this.scalyar = scalyar;
-            this.Vector = Vector;
+            vector1 = Vector.Item1;
+            vector2 = Vector.Item2;
         }
 
         /// <summary>
@@ -56,7 +63,7 @@ namespace InternShip1
         /// <returns>About Quanterion</returns>
         public override string ToString()
         {
-            return $"scalyar = {Scalyar} vector({Vector.Item1},{Vector.Item2})";
+            return $"scalyar = {Scalyar} vector({vector1},{vector2})";
         }
     }
 }

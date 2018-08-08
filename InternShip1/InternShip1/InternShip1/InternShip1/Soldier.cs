@@ -20,7 +20,7 @@ namespace InternShip1
         /// <summary>
         /// Здоровье
         /// </summary>
-        private int health = 100;
+        public int health { get; set; } = 100;
 
         /// <summary>
         /// Конструктор с параметрами

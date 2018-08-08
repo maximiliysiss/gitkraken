@@ -21,7 +21,7 @@ namespace InternShip1
         /// <summary>
         /// Вес
         /// </summary>
-        private int weight;
+        public int weight { get; set; }
 
         /// <summary>
         /// Конструктор с аргументами

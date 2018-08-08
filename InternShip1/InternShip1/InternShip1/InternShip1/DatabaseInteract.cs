@@ -9,11 +9,28 @@ using System.Threading.Tasks;
 namespace InternShip1
 {
     /// <summary>
-    /// Шаблонный абстрактный класс подключения к базе данных
+    /// Шаблонный класс подключения к базе данных
     /// </summary>
     /// <typeparam name="T">Тип параметра</typeparam>
-    abstract class DatabaseInteract<T>
+    class DatabaseInteract<T> where T : class, IIntegerKey, new()
     {
+
+        /// <summary>
+        /// Получить Id роли для параметра T
+        /// </summary>
+        /// <param name="sqlConnection">Подключение</param>
+        /// <returns>ID</returns>
+        private int? GetRole(SqlConnection sqlConnection)
+        {
+            using (var sqlCmd = new SqlCommand($"select * from Type where Name='{typeof(T).Name}'", sqlConnection))
+            {
+                using (var reader = sqlCmd.ExecuteReader())
+                {
+                    reader.Read();
+                    return Convert.ToInt32(reader["Id"]);
+                }
+            }
+        }
 
         /// <summary>
         /// Выгрузка списка данных
@@ -32,11 +49,17 @@ namespace InternShip1
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
+                            int? type = GetRole(conn);
+                            if (!type.HasValue)
+                                throw new ArgumentException("Incorrect Type");
                             while (reader.Read())
                             {
-                                T elem = Serialize(reader);
-                                if (elem != null)
-                                    list.Add(elem);
+                                if (Convert.ToInt32(reader["TypeOfEntity"]) == type)
+                                {
+                                    T tmp = Serialize(reader);
+                                    if (tmp != null)
+                                        list.Add(tmp);
+                                }
                             }
                         }
                     }
@@ -53,8 +76,31 @@ namespace InternShip1
         /// Сериализатор данных
         /// </summary>
         /// <param name="reader">Reader</param>
-        /// <returns>List</returns>
-        public abstract T Serialize(SqlDataReader reader);
+        /// <returns>Экземпляр объекта</returns>
+        public virtual T Serialize(SqlDataReader reader)
+        {
+            T elem = new T();
+
+            foreach (var prop in elem.GetType().GetProperties())
+            {
+                try
+                {
+                    if (prop.Name == "Rotate")
+                        foreach (var qprop in elem.Rotate.GetType().GetProperties())
+                            qprop.SetValue(elem.Rotate, reader[qprop.Name]);
+                    else
+                        prop.SetValue(elem, reader[prop.Name]);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message} Property is {prop.Name} in Serialize in object type '{typeof(T).Name}'");
+                    return null;
+                }
+            }
+
+            return elem;
+
+        }
 
     }
 }

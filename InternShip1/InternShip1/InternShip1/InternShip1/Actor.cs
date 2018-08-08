@@ -21,6 +21,7 @@ namespace InternShip1
     interface IIntegerKey
     {
         int Id { get; set; }
+        Quanternion Rotate { get; set; }
     }
 
     /// <summary>
@@ -36,7 +37,9 @@ namespace InternShip1
         /// <summary>
         /// Позиции
         /// </summary>
-        protected int x, y, z;
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
 
         /// <summary>
         /// Default Constructor

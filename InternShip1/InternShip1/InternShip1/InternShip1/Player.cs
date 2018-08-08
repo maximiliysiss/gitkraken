@@ -20,7 +20,7 @@ namespace InternShip1
         /// <summary>
         /// Свойство живости игрока
         /// </summary>
-        public bool IsDeath { get; set; }
+        public byte IsDeath { get; set; }
 
         /// <summary>
         /// Конструктор с аргументами
@@ -31,7 +31,7 @@ namespace InternShip1
         /// <param name="Rotate">Rotate</param>
         public Player(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, TypeEntity.Player)
         {
-            IsDeath = false;
+            IsDeath = 0;
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="IsDeath">IsDeath</param>
-        public Player(int x, int y, int z, Quanternion Rotate, bool IsDeath) : base(x, y, z, Rotate, TypeEntity.Player)
+        public Player(int x, int y, int z, Quanternion Rotate, byte IsDeath) : base(x, y, z, Rotate, TypeEntity.Player)
         {
             this.IsDeath = IsDeath;
         }
@@ -53,7 +53,7 @@ namespace InternShip1
         /// <returns>Aboyut player</returns>
         public override string GetInformation()
         {
-            return $"This is player - {PositionInformation()} IsDeath = {IsDeath}";
+            return $"This is player - {PositionInformation()} IsDeath = {IsDeath == 1}";
         }
 
         /// <summary>

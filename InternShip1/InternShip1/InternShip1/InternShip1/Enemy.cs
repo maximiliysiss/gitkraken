@@ -15,7 +15,7 @@ namespace InternShip1
         /// <summary>
         /// Default Constractor
         /// </summary>
-        public Enemy() { levelAgressive = 0; }
+        public Enemy() { LevelAgressive = 0; }
 
         /// <summary>
         /// Конструктор с аргументами
@@ -27,18 +27,13 @@ namespace InternShip1
         /// <param name="levelAgressive">Level of agressive</param>
         public Enemy(int x, int y, int z, Quanternion Rotate, short levelAgressive, TypeEntity TypeEntity) : base(x, y, z, Rotate, TypeEntity)
         {
-            this.levelAgressive = levelAgressive;
+            this.LevelAgressive = levelAgressive;
         }
-
-        /// <summary>
-        /// Уровень агрессии
-        /// </summary>
-        protected int levelAgressive;
 
         /// <summary>
         /// Свойство для получения уровня агрессии
         /// </summary>
-        public int LevelAgressive { get { return levelAgressive; } }
+        public int LevelAgressive { get; set; }
 
         /// <summary>
         /// Получить дополнительную информацию о враге
@@ -52,7 +47,7 @@ namespace InternShip1
         /// <returns>All information about object</returns>
         public override string GetInformation()
         {
-            return $"This is enemy - {GetInformationAboutEnemy()} - {PositionInformation()}; Level of agressive is {levelAgressive}";
+            return $"This is enemy - {GetInformationAboutEnemy()} - {PositionInformation()}; Level of agressive is {LevelAgressive}";
         }
     }
 }
