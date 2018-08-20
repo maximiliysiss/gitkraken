@@ -21,7 +21,7 @@ namespace InternShip1
         /// <summary>
         /// Вес
         /// </summary>
-        public int weight { get; set; }
+        public int Weight { get; set; }
 
         /// <summary>
         /// Конструктор с аргументами
@@ -30,9 +30,9 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Helicopter(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, int v1, int v2, int sc) : base(x, y, z, v1, v2, sc, 50, TypeEntity.Helicopter)
         {
-            weight = 30;
+            Weight = 30;
         }
 
         /// <summary>
@@ -43,9 +43,9 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="weight">Weight</param>
-        public Helicopter(int x, int y, int z, Quanternion Rotate, int weight) : base(x, y, z, Rotate, 50, TypeEntity.Helicopter)
+        public Helicopter(int x, int y, int z, int v1, int v2, int sc, int weight) : base(x, y, z, v1, v2, sc, 50, TypeEntity.Helicopter)
         {
-            this.weight = weight;
+            this.Weight = weight;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace InternShip1
         /// <returns>It's helicopter</returns>
         public override string GetInformationAboutEnemy()
         {
-            return $"It's helicopter and it's weigth = {this.weight}";
+            return $"It's helicopter and it's weigth = {this.Weight}";
         }
     }
 }
