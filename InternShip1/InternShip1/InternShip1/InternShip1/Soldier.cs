@@ -20,7 +20,7 @@ namespace InternShip1
         /// <summary>
         /// Здоровье
         /// </summary>
-        private int health = 100;
+        public int Health { get; set; } = 100;
 
         /// <summary>
         /// Конструктор с параметрами
@@ -29,7 +29,7 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
-        public Soldier(int x, int y, int z, Quanternion Rotate) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        public Soldier(int x, int y, int z, int v1, int v2, int sc) : base(x, y, z, v1, v2, sc, 10, TypeEntity.Soldier)
         {
         }
 
@@ -41,9 +41,9 @@ namespace InternShip1
         /// <param name="z">Oz</param>
         /// <param name="Rotate">Rotate</param>
         /// <param name="health">Health</param>
-        public Soldier(int x, int y, int z, Quanternion Rotate, int health) : base(x, y, z, Rotate, 10, TypeEntity.Soldier)
+        public Soldier(int x, int y, int z, int v1, int v2, int sc, int health) : base(x, y, z, v1, v2, sc, 10, TypeEntity.Soldier)
         {
-            this.health = health;
+            this.Health = health;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace InternShip1
         /// <returns>I'm soldier</returns>
         public override string GetInformationAboutEnemy()
         {
-            return $"I'm soldier and hp = {this.health}";
+            return $"I'm soldier and hp = {this.Health}";
         }
     }
 }

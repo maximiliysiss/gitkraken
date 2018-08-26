@@ -26,17 +26,40 @@ namespace InternShip1
     /// <summary>
     /// Класс Actor
     /// </summary>
-    abstract class Actor : IIntegerKey
+    class Actor : IIntegerKey
     {
+
         /// <summary>
-        /// Поворот
+        /// Скаляр
         /// </summary>
-        public Quanternion Rotate { get; set; }
+        private int scalyar;
+
+        /// <summary>
+        /// Свойство скаляра
+        /// </summary>
+        public int Scalyar
+        {
+            get { return scalyar; }
+            set { if (value < 0) throw new ArgumentException("Scalyar > 0"); scalyar = value; }
+        }
+
+        /// <summary>
+        /// Составляющая вектора1
+        /// </summary>
+        /// 
+        public int Vector1 { get; set; }
+
+        /// <summary>
+        /// Составляющая вектора2
+        /// </summary>
+        public int Vector2 { get; set; }
 
         /// <summary>
         /// Позиции
         /// </summary>
-        protected int x, y, z;
+        public int x { get; set; }
+        public int y { get; set; }
+        public int z { get; set; }
 
         /// <summary>
         /// Default Constructor
@@ -44,7 +67,7 @@ namespace InternShip1
         public Actor()
         {
             this.x = this.y = this.z = 0;
-            this.Rotate = new Quanternion();
+            this.Vector1 = this.Vector2 = this.Scalyar = 0;
             TypeOfEntity = TypeEntity.Unknown;
         }
 
@@ -54,13 +77,13 @@ namespace InternShip1
         /// <returns>Position Information</returns>
         protected String PositionInformation()
         {
-            return $"Position({x},{y},{z}) Quanterion = {Rotate.ToString()}";
+            return $"Position({x},{y},{z}) Quanterion = ({Vector1}; {Vector2}; {Scalyar})";
         }
 
         /// <summary>
         /// Тип Сущности
         /// </summary>
-        protected TypeEntity TypeOfEntity { get; set; }
+        public TypeEntity TypeOfEntity { get; set; }
 
         /// <summary>
         /// Реализация интерфейса
@@ -75,12 +98,14 @@ namespace InternShip1
         /// <param name="y">Oy</param>
         /// <param name="z">Oz</param>
         /// <param name="Rotate"></param>
-        public Actor(int x, int y, int z, Quanternion Rotate, TypeEntity TypeEntity)
+        public Actor(int x, int y, int z, int v1, int v2, int sc, TypeEntity TypeEntity)
         {
             this.x = x;
             this.y = y;
             this.z = z;
-            this.Rotate = Rotate;
+            this.Vector1 = v1;
+            this.Vector2 = v2;
+            this.scalyar = sc;
             this.TypeOfEntity = TypeEntity;
         }
 

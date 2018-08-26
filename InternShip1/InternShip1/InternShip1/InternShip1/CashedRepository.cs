@@ -11,7 +11,7 @@ namespace InternShip1
     /// Загрузка данных с кэшированием
     /// </summary>
     /// <typeparam name="T">Сущность</typeparam>
-    abstract class CashedRepository<T> : DatabaseInteract<T> where T : IIntegerKey
+    abstract class CashedRepository<T> : DatabaseInteract<T> where T : class, IIntegerKey, new()
     {
         /// <summary>
         /// Строка подключения
@@ -40,8 +40,17 @@ namespace InternShip1
         public List<T> LoadFromCacheByLinq(Func<T, bool> func)
         {
             if (cashedElements.Count == 0)
-                cashedElements = Load(connectionString).ToDictionary(a => a.Id, a => a);
+                cashedElements = Load().ToDictionary(a => a.Id, a => a);
             return cashedElements.Where(x => func(x.Value)).Select(x => x.Value).ToList();
+        }
+
+        /// <summary>
+        /// Упрощенние загрузки без параметра
+        /// </summary>
+        /// <returns></returns>
+        public List<T> Load()
+        {
+            return Load(connectionString);
         }
 
         /// <summary>
