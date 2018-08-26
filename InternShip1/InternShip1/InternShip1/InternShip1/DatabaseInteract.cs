@@ -61,7 +61,10 @@ namespace InternShip1
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        public abstract T CreateObj(SqlDataReader reader);
+        public virtual T CreateObj(SqlDataReader reader)
+        {
+            return new T();
+        }
 
         /// <summary>
         /// Сериализатор данных
